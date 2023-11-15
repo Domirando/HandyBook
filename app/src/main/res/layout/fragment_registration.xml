@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.RegistrationFragment"
+    android:padding="25dp"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp">
+        <ImageView
+            android:id="@+id/bacK_btn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@drawable/baseline_arrow_back_ios_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ro'yhatdan o'tish"
+            android:textSize="20sp"
+            android:layout_marginStart="56dp"
+            android:fontFamily="@font/text_style_splash"
+            android:textStyle="bold"
+            android:textColor="#0F1B5E"/>
+    </LinearLayout>
+    <TextView
+        android:layout_marginTop="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#0F1B5E"
+        android:text="Username"
+        android:textStyle="bold"
+        android:fontFamily="@font/text_style_splash"/>
+    <EditText
+        android:text=""
+        android:id="@+id/username"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:inputType="text"
+        android:background="@drawable/edittext_shape"/>
+    <TextView
+        android:layout_marginTop="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#0F1B5E"
+        android:text="To'liq ismingiz"
+        android:textStyle="bold"
+        android:fontFamily="@font/text_style_splash"/>
+    <EditText
+        android:text=""
+        android:id="@+id/full_name"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:inputType="text"
+        android:background="@drawable/edittext_shape"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:fontFamily="@font/text_style_splash"
+        android:text="Email"
+        android:textColor="#0F1B5E"
+        android:textStyle="bold" />
+
+    <EditText
+        android:text=""
+        android:id="@+id/email_edittext_id"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:inputType="textEmailAddress"
+        android:background="@drawable/edittext_shape"/>
+    <TextView
+        android:layout_marginTop="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#0F1B5E"
+        android:text="Parol"
+        android:textStyle="bold"
+        android:fontFamily="@font/text_style_splash"/>
+    <EditText
+        android:text=""
+        android:id="@+id/password_edittext_id"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:inputType="textPassword"
+        android:background="@drawable/edittext_shape"/>
+    <TextView
+        android:layout_marginTop="28dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#0F1B5E"
+        android:text="Parolni takrorlash"
+        android:textStyle="bold"
+        android:fontFamily="@font/text_style_splash"/>
+    <EditText
+        android:text=""
+        android:id="@+id/c_password_edittext_id"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:inputType="textPassword"
+        android:background="@drawable/edittext_shape"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tasdiqlash tugmasini bosish orqali siz"
+            android:textSize="10sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="' Maxfiylik siyosati'"
+            android:textSize="10sp"
+            android:textColor="#9BDAE3"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" shartlatiga"
+            android:textSize="10sp"/>
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="rozilik bildirasiz"
+        android:textSize="10sp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/reg_btn_id"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:backgroundTint="#9BDAE3"
+        android:fontFamily="@font/text_style_splash"
+        android:text="Ro'yhatdan o'tish"
+        android:textColor="#091450"
+        android:textSize="17sp"
+        app:cornerRadius="8dp"
+        android:layout_marginTop="50dp"/>
+</LinearLayout>

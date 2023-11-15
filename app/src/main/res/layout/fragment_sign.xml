@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#091450"
+    tools:context=".ui.SignFragment">
+
+
+    <ImageView
+        android:id="@+id/logo_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo_1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.532"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/text_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="HandyBook"
+        android:textSize="30sp"
+        android:fontFamily="@font/text_style_splash"
+        app:layout_constraintTop_toBottomOf="@id/logo_id"
+        android:textColor="#9BDAE3"
+        app:layout_constraintStart_toStartOf="@+id/logo_id"
+        app:layout_constraintEnd_toEndOf="@+id/logo_id"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/login_btn_id"
+        android:layout_width="300dp"
+        android:layout_height="55dp"
+        android:layout_marginBottom="72dp"
+        android:backgroundTint="#9BDAE3"
+        android:fontFamily="@font/text_style_splash"
+        android:text="Kirish"
+        android:textColor="#091450"
+        android:textSize="17sp"
+        app:cornerRadius="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/text_id"
+        app:layout_constraintHorizontal_bias="0.582"
+        app:layout_constraintStart_toStartOf="@+id/text_id" />
+
+    <TextView
+        android:id="@+id/registration_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ro'yhatdan o'tish"
+        android:textColor="#9BDAE3"
+        android:textSize="15sp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/text_style_splash"
+        app:layout_constraintEnd_toEndOf="@+id/login_btn_id"
+        app:layout_constraintStart_toStartOf="@+id/login_btn_id"
+        app:layout_constraintTop_toBottomOf="@+id/login_btn_id" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

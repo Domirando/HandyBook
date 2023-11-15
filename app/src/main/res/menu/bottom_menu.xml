@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <!--Bosh Sahifa-->
+    <item
+        android:id="@+id/bosh_sahifa"
+        android:icon="@drawable/outline_menu_book_24"
+        android:title="Bosh Sahifa" />
+    <!--    Qidiruv-->
+    <item
+        android:id="@+id/qidiruv"
+        android:icon="@drawable/outline_search_24"
+        android:title="Qidiruv" />
+    <!--    Maqolalar-->
+    <item
+        android:id="@+id/maqola"
+        android:icon="@drawable/outline_create_24"
+        android:title="Maqolalar" />
+    <!--Saqlanganlar-->
+    <item
+        android:id="@+id/saqlanganlar"
+        android:icon="@drawable/baseline_bookmark_border_24"
+        android:title="Saqlanganlar" />
+    <!--    Tilni o'zgartiring-->
+    <item
+        android:id="@+id/tilniozgartir"
+        android:icon="@drawable/baseline_language_24"
+        android:title="Tilni o'zgartiring"/>
+</menu>
