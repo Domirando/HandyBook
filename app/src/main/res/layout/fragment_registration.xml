@@ -109,32 +109,12 @@
         android:layout_height="45dp"
         android:inputType="textPassword"
         android:background="@drawable/edittext_shape"/>
-    <LinearLayout
+    <androidx.appcompat.widget.AppCompatCheckBox
+        android:id="@+id/ischecked"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Tasdiqlash tugmasini bosish orqali siz"
-            android:textSize="10sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="' Maxfiylik siyosati'"
-            android:textSize="10sp"
-            android:textColor="#9BDAE3"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" shartlatiga"
-            android:textSize="10sp"/>
-    </LinearLayout>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="rozilik bildirasiz"
-        android:textSize="10sp"/>
+        android:text="tasdiqlash_tugmasini_bosish_orqali_siz_maxfiylik_siyosati_shartlariga_rozilik_bildirasiz"
+        app:buttonTint="#21BFDF" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/reg_btn_id"

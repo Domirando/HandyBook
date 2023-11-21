@@ -19,7 +19,7 @@ interface APIService {
     fun login(@Body loginRequest: Login): Call<User>
 
     @POST("/book-api/register")
-    fun register(@Body regRequest: UserReg):Call<UserReg>
+    fun signup(@Body reg: UserReg): Call<User>
 
     @GET("/book-api")
     fun getAllBooks(): Call<List<Book>>

@@ -13,7 +13,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -54,4 +53,5 @@ dependencies {
 //    implementation("com.github.mhiew:android-pdf-viewer:3.2.0-beta.1")
     implementation("io.coil-kt:coil:2.4.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:3.9.0")
+    implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
 }
