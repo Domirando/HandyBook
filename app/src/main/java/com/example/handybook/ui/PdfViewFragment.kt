@@ -1,19 +1,24 @@
 package com.example.handybook.ui
 
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import coil.load
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentEBookBinding
 import com.example.handybook.databinding.FragmentLoginBinding
 import com.example.handybook.databinding.FragmentPdfViewBinding
 import com.example.handybook.model.Book
+import com.example.handybook.model.RetrievePDFFromURL
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
+import com.github.barteksc.pdfviewer.PDFView
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,14 +35,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class PdfViewFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
+    private var id: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            id = it.getInt("id")
         }
     }
 
@@ -46,34 +48,28 @@ class PdfViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        var pdf_url = ""
         val binding = FragmentPdfViewBinding.inflate(inflater, container, false)
         val api = APIClient.getInstance().create(APIService::class.java)
-        var pdf_url = ""
         api.getBookById(id).enqueue(object : Callback<Book> {
             override fun onResponse(call: Call<Book>, response: Response<Book>) {
                 if (response.isSuccessful && response.body() != null){
                     var item = response.body()!!
                     pdf_url = item.file
+                    Log.d("filee", pdf_url)
                 }
             }
             override fun onFailure(call: Call<Book>, t: Throwable) {
                 Log.d("TAG", "onFailure: $t")
             }
         })
-        Log.d("url:", pdf_url)
-//        binding.pdfView.fromUri(pdf_url.toString())
+        Log.d("id", id.toString())
+        Log.d("file", pdf_url)
+        RetrievePDFFromURL(binding.pdfView).execute("http://handybook.uz/frontend/web/file/701697625957.pdf")
         return binding.root
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment PdfViewFragment.
-         */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =

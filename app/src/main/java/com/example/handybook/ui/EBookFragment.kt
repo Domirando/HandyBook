@@ -80,7 +80,15 @@ class EBookFragment : Fragment() {
             var pdf = PdfViewFragment()
             pdf.arguments = bundle
             parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, pdf)
+                .replace(R.id.main, pdf)
+                .commit()
+        }
+        binding.rating.setOnClickListener {
+            var details = ReviewFragment()
+            bundle.putSerializable("id", id)
+            details.arguments = bundle
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main, details)
                 .commit()
         }
 
