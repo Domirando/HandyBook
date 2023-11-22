@@ -1,4 +1,4 @@
-package uz.itteacher.mybook.moedel
+package com.example.handybook.model
 
 data class AddComment(
     val book_id: Int,

@@ -42,9 +42,9 @@ class MainFragment : Fragment() {
             .commit()
 
         binding.person.setOnClickListener {
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.main, AccountFragment())
-                .commit()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main, AccountFragment())
+                    .commit()
         }
 
         return binding.root

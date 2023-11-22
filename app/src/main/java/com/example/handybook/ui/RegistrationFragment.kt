@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.example.handybook.R
 import com.example.handybook.databinding.FragmentRegistrationBinding
 import com.example.handybook.model.User
 import com.example.handybook.model.UserReg
@@ -53,38 +54,47 @@ class RegistrationFragment : Fragment() {
         val api = APIClient.getInstance().create(APIService::class.java)
         binding.regBtnId.setOnClickListener {
             if (check()){
+                Log.d("USER-1", "signUp.toString()")
                 val signUp = UserReg(
                     binding.username.text.toString(),
                     binding.fullName.text.toString(),
                     binding.emailEdittextId.text.toString(),
                     binding.passwordEdittextId.text.toString()
                 )
-                Log.d("USER", signUp.toString())
-                api.signup(signUp).enqueue(object: Callback<User> {
+                Log.d("USER-2", signUp.toString())
+                api.signup(signUp).enqueue(object : Callback<User> {
                     override fun onResponse(call: Call<User>, response: Response<User>) {
-                        Log.d("CODE",response.code().toString())
+                        Log.d("TAG", "$response")
+                        if (response.code() == 422){
+                            Log.d("error", "Username allaqachon olingan")
+                            return
+                        }
+                        if (!response.isSuccessful) {
+                            Log.d("error","sign up error")
+                            return
+                        }
                         var user= User(response.body()!!.access_token, response.body()!!.id,
-                            response.body()!!.username)
+                            response.body()!!.fullname, response.body()!!.username)
                         sharedPrefHelper.setUser(user)
-
-
-                        Log.d("USER",user.toString())
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.container, HomeFragment())
+                            .commit()
                     }
+//maftunyuna
+//                    maftuunaxon
+//                    pvmaftunaxon@gmail.com
 
                     override fun onFailure(call: Call<User>, t: Throwable) {
-                        Log.d("ERROR",t.toString())
+                        Log.d("TAG", "$t")
                     }
-
                 })
             }
-
-
-        }
-
-//        binding.bacKBtn.setOnClickListener {
-//            findNavController().navigate(R.id.action_signUpFragment_to_signInFragment)
-//        }
-
+            }
+            binding.bacKBtn.setOnClickListener {
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.container, LoginFragment())
+                    .commit()
+}
 
 
         return binding.root

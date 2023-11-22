@@ -1,7 +1,8 @@
 package com.example.handybook.model
 
 data class UserReg(
-    var username:String,
-    var fullname:String,
-    var email:String,
-    var password:String)
+    var username: String,
+    val fullname: String,
+    val email: String,
+    val password: String
+)

@@ -77,10 +77,12 @@
     </com.google.android.material.textfield.TextInputLayout>
 
         <CheckBox
+            android:id="@+id/loginRememberMe"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Meni eslab qol"
             android:textColor="#0F1B5E"/>
+
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/login_btn_id"

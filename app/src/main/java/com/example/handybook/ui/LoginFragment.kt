@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.example.handybook.MyShared
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentLoginBinding
@@ -55,14 +56,27 @@ class LoginFragment : Fragment() {
         }
         val api = APIClient.getInstance().create(APIService::class.java)
         binding.loginBtnId.setOnClickListener {
-            var username_layout_item=binding.usernameEdittextId.text
-            var password_layout_item=binding.passwordEdittextId.text
-            val l= Login(username_layout_item.toString(),password_layout_item.toString())
-            api.login(l).enqueue(object : Callback<User>{
+            var username=binding.usernameEdittextId.text.trim()
+            var password=binding.passwordEdittextId.text?.trim()
+            val l= Login(username.toString(),password.toString())
+            if (l.password == "" || l.username == "") return@setOnClickListener
+            api.login(l).enqueue(object: Callback<User> {
                 override fun onResponse(call: Call<User>, response: Response<User>) {
-                    if(response.isSuccessful && response.body()!=null){
+                    if (!response.isSuccessful) {
+                        Toast.makeText(requireContext(), "Noto'g'ri username yoki parol", Toast.LENGTH_SHORT).show()
+                        return
+                    }
+                    if (binding.loginRememberMe.isChecked) {
+                        var user: User = response.body()!!
                         val shared = MyShared.getInstance(requireContext())
-                        val user = response.body()!!
+                        shared.setUser(user)
+
+                        parentFragmentManager.beginTransaction()
+                            .replace(R.id.main, MainFragment())
+                            .commit()
+                    } else {
+                        var user: User = response.body()!!
+                        val shared = MyShared.getInstance(requireContext())
                         shared.setUser(user)
                         parentFragmentManager.beginTransaction()
                             .replace(R.id.main, MainFragment())
@@ -70,8 +84,9 @@ class LoginFragment : Fragment() {
                     }
                 }
                 override fun onFailure(call: Call<User>, t: Throwable) {
-                    Log.d(ContentValues.TAG, "onFailure: $t")
+                    Log.d("TAG", "$t")
                 }
+
             })
         }
         return binding.root

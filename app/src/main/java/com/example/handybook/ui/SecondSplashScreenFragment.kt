@@ -51,7 +51,7 @@ class SecondSplashScreenFragment : Fragment() {
         if(user == null){
             handler.postDelayed({
                 parentFragmentManager.beginTransaction()
-                    .replace(R.id.main, HomeFragment())
+                    .replace(R.id.main, LoginFragment())
                     .commit()
             }, 2000)
         }else{

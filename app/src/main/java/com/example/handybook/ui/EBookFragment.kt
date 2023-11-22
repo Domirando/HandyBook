@@ -83,7 +83,7 @@ class EBookFragment : Fragment() {
                 .replace(R.id.main, pdf)
                 .commit()
         }
-        binding.rating.setOnClickListener {
+        binding.linearLayout5.setOnClickListener {
             var details = ReviewFragment()
             bundle.putSerializable("id", id)
             details.arguments = bundle
