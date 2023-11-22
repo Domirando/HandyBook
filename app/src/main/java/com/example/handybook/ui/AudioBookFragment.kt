@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SeekBar
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -48,6 +49,7 @@ class AudioBookFragment : Fragment() {
 
         api.getBookById(id).enqueue(object : Callback<Book> {
             override fun onResponse(call: retrofit2.Call<Book>, response: Response<Book>) {
+                Log.d("item", response.body().toString())
                 if (response.isSuccessful && response.body() != null){
                     var item = response.body()!!
                     if (item.audio == null){
@@ -111,6 +113,9 @@ class AudioBookFragment : Fragment() {
                         }
                     }
 
+                }
+                else{
+                    Toast.makeText(requireContext(),"Audio topilmadi!", Toast.LENGTH_SHORT).show()
                 }
             }
             override fun onFailure(call: retrofit2.Call<Book>, t: Throwable) {
