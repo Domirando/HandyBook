@@ -1,11 +1,21 @@
 package com.example.handybook.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.handybook.R
+import com.example.handybook.adapters.CommentsAdapter
+import com.example.handybook.databinding.FragmentCommentsBinding
+import com.example.handybook.model.Comment
+import com.example.handybook.networking.APIClient
+import com.example.handybook.networking.APIService
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +31,7 @@ class CommentsFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var comments = mutableListOf<Comment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,8 +45,31 @@ class CommentsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comments, container, false)
+        val binding = FragmentCommentsBinding.inflate(inflater, container, false)
+        val api = APIClient.getInstance().create(APIService::class.java)
+        Log.d("comment param", param1.toString())
+        api.getBookComment(param1.toString().toInt()).enqueue(object: Callback<List<Comment>> {
+            override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
+                if (response.isSuccessful && response.body()!= null){
+                    comments = response.body()!!.toMutableList()
+                    binding.commentsRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+                    binding.commentsRv.adapter = CommentsAdapter(comments)
+
+                }
+            }
+
+            override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
+                Log.d("TAG", "onFailure: $")
+            }
+        })
+
+        binding.comment.setOnClickListener {
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main, ReviewFragment.newInstance(param1!!,""))
+                .commit()
+        }
+
+        return binding.root
     }
 
     companion object {

@@ -2,8 +2,7 @@ package com.example.handybook.model
 
 data class AddComment(
     val book_id: Int,
-    var id: Int = 0,
-    val reyting: Double,
+    var user_id: Int = 0,
     val text: String,
-    val user_id: Int
-)
+    val reyting: Int,
+    )

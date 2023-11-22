@@ -70,16 +70,11 @@ class EBookFragment : Fragment() {
             }
         })
 
-//        binding.viewPager.adapter = ViewPagerAdapter(parentFragmentManager,lifecycle,id)
-//        TabLayoutMediator(binding.tabLayout2, binding.viewPager){ tab, position ->
-//            tab.text = list[position]
-//        }.attach()
+        binding.viewPager.adapter = ViewPagerAdapter(parentFragmentManager,lifecycle,id)
+        TabLayoutMediator(binding.tabLayout2, binding.viewPager){ tab, position ->
+            tab.text = list[position]
+        }.attach()
 
-//        binding.read.setOnClickListener {
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.main, PDFViewerFragment.newInstance(id.toString(),""))
-//                .commit()
-//        }
 
         var bundle = Bundle()
         bundle.putInt("id",id)

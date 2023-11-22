@@ -6,16 +6,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.handybook.MyShared
 import com.example.handybook.R
 import com.example.handybook.databinding.FragmentReviewBinding
 import com.example.handybook.model.AddComment
 import com.example.handybook.model.Book
 import com.example.handybook.model.Comment
+import com.example.handybook.model.User
 import com.example.handybook.networking.APIClient
 import com.example.handybook.networking.APIService
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
 
 class ReviewFragment : Fragment() {
     // TODO: Rename and change types of parameters
@@ -24,6 +29,11 @@ class ReviewFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        arguments?.let {
+            param1 = it.getString(ARG_PARAM1)
+            param2 = it.getString(ARG_PARAM2)
+        }
+
     }
 
     override fun onCreateView(
@@ -32,38 +42,32 @@ class ReviewFragment : Fragment() {
     ): View? {
         val binding= FragmentReviewBinding.inflate(inflater, container, false)
 
-        var  book_id = arguments?.getSerializable("id") as Int
 //        binding.bookName.text=book.name+" romani sizga qanchalik manzur keldi?"
         binding.back.setOnClickListener {
-            requireActivity().onBackPressed()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main, CommentsFragment())
+                .commit()
         }
         var rating = binding.ratingBar.rating
         if (rating.toString().toDouble()>3.0){
             binding.emoji.setImageResource(R.drawable.book)
         }
         val api = APIClient.getInstance().create(APIService::class.java)
-        Log.d("book-id", book_id.toString())
-        api.getBookComment(book_id).enqueue(object :Callback<List<Comment>>{
-            override fun onResponse(call: Call<List<Comment>>, response: Response<List<Comment>>) {
-                Log.d("comment-1", response.body()?.get(0).toString())
-            }
+        val shared = MyShared.getInstance(requireContext())
+        var user = shared.getUser()
+        var comment = AddComment(param1!!.toInt(), user!!.id, binding.review.text.toString(), 2)
+        Log.d("user-id", user!!.id.toString())
 
-            override fun onFailure(call: Call<List<Comment>>, t: Throwable) {
-                Log.d("Asdf", "onFailure: $t")
-            }
-        })
 
         binding.send.setOnClickListener{
-//            val c = AddComment(book_id = book_id, user_id = 1, reyting = rating.toString().toDouble(), text = binding.review.text.toString())
-//            api.addComment(c).enqueue(object : Callback<AddComment> {
-//                override fun onResponse(call: Call<AddComment>, response: Response<AddComment>) {
-//                    Log.d("commited res", response.body().toString())
-//                }
-//
-//                override fun onFailure(call: Call<AddComment>, t: Throwable) {
-//                    Log.d("failure", "onFailure: $t")
-//                }
-//            })
+            api.addComment(comment).enqueue(object : Callback<AddComment> {
+                override fun onResponse(call: Call<AddComment>, response: Response<AddComment>) {
+                    Log.d("yubordi:", response.body().toString())
+                }
+                override fun onFailure(call: Call<AddComment>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+            })
             parentFragmentManager.beginTransaction()
                 .replace(R.id.main, HomeFragment())
                 .commit()
@@ -76,7 +80,7 @@ class ReviewFragment : Fragment() {
         binding.back.setOnClickListener {
             var bundle = Bundle()
             var details = DetailsFragment()
-            bundle.putInt("book", book_id)
+            bundle.putInt("book", param1!!.toInt())
             details.arguments = bundle
             parentFragmentManager.beginTransaction()
                 .replace(R.id.main, details)
@@ -99,7 +103,10 @@ class ReviewFragment : Fragment() {
         fun newInstance(param1: String, param2: String) =
             ReviewFragment().apply {
                 arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
                 }
             }
     }
 }
+

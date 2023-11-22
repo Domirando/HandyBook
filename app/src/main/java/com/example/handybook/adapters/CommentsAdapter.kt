@@ -26,7 +26,7 @@ class CommentsAdapter(var comments:MutableList<Comment>) : RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: CommentsHolder, position: Int) {
         var item = comments[position]
-        holder.name.text = item.username
+//        holder.name.text = item.username
         holder.comment.text = item.text
     }
 
