@@ -29,6 +29,7 @@ class EBookFragment : Fragment() {
 
     private var id: Int = 0
     lateinit var book: Book
+    val READ_EXTERNAL_STORAGE_REQUEST = 1
     var list = listOf<String>("Tavsifi", "Sharhlar", "Iqtibslar")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,31 +80,48 @@ class EBookFragment : Fragment() {
         var bundle = Bundle()
         bundle.putInt("id",id)
 
-
-
-
         binding.read.setOnClickListener{
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED) {
+//            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE)== PackageManager.PERMISSION_GRANTED) {
+//                val pdfFileUri: Uri = Uri.parse(book.file)
+//                Log.d("pdf uri", pdfFileUri.path.toString())
+//                val intent = Intent(Intent.ACTION_VIEW)
+//                intent.setDataAndType(pdfFileUri, "application/pdf")
+//                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+//                startActivity(intent)
+//            } else {
+//                Log.d("permi", "denied")
+//            }
+
+            // Add this constant in your class
+
+// Check if permission is granted, request if needed
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                val packageManager: PackageManager? = requireActivity().packageManager
                 val pdfFileUri: Uri = Uri.parse(book.file)
                 Log.d("pdf uri", pdfFileUri.path.toString())
                 val intent = Intent(Intent.ACTION_VIEW)
-                intent.setDataAndType(pdfFileUri, "application/pdf")
-                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-                startActivity(intent)
+                if (intent.resolveActivity(packageManager!!) != null) {
+                    startActivity(intent)
+                } else {
+                    Log.d("pdf uri packagemanager null", pdfFileUri.toString())
+                }
             } else {
-                Log.d("permi", "denied")
+                // Permission has not been granted yet, request it
+                ActivityCompat.requestPermissions(
+                    requireActivity(),
+                    arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+                    READ_EXTERNAL_STORAGE_REQUEST
+                )
             }
 
+            // Handle the result of the permission request
 
 
 
-
-            val packageManager: PackageManager? = requireActivity().packageManager
-//            if (intent.resolveActivity(packageManager!!) != null) {
-//                startActivity(intent)
-//            } else {
-//                Log.d("pdf uri packagemanager null", pdfFileUri.path.toString())
-//            }
         }
         binding.linearLayout5.setOnClickListener {
             var details = ReviewFragment()
@@ -115,6 +133,23 @@ class EBookFragment : Fragment() {
         }
 
         return binding.root
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        when (requestCode) {
+            READ_EXTERNAL_STORAGE_REQUEST -> {
+                if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    // Permission granted, proceed with reading external storage
+                    // Your code to read external storage goes here
+                } else {
+                    // Permission denied, handle accordingly (e.g., show a message to the user)
+                }
+            }
+            // Add other cases if needed for different permissions
+        }
     }
 
 

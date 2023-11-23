@@ -54,7 +54,6 @@ class CommentsFragment : Fragment() {
                     comments = response.body()!!.toMutableList()
                     binding.commentsRv.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
                     binding.commentsRv.adapter = CommentsAdapter(comments)
-
                 }
             }
 

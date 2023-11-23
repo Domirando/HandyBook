@@ -62,15 +62,21 @@ class HomeFragment : Fragment() {
                 val mainBook = response.body()!!
                 binding.mainbookimage.load(mainBook.image)
                 binding.mainText.text = """${mainBook.author}ning "${mainBook.name}" asari"""
-                binding.readnow.setOnClickListener {
-                    // TODO Set listener
-                }
             }
             override fun onFailure(call: Call<Book>, t: Throwable) {
                 Log.d("TAG", "$t")
             }
 
         })
+        binding.readnow.setOnClickListener {
+            var bundle = Bundle()
+            var details = DetailsFragment()
+            bundle.putInt("book", 2)
+            details.arguments = bundle
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.main, details)
+                .commit()
+        }
         api.getAllBooks().enqueue(object : Callback<List<Book>> {
             @SuppressLint("NotifyDataSetChanged")
             override fun onResponse(call: Call<List<Book>>, response: Response<List<Book>>) {
