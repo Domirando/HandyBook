@@ -54,4 +54,6 @@ dependencies {
     implementation("io.coil-kt:coil:2.4.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:3.9.0")
     implementation("com.github.barteksc:android-pdf-viewer:2.8.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
 }

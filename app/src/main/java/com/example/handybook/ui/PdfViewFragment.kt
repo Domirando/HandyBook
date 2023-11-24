@@ -1,27 +1,16 @@
 package com.example.handybook.ui
 
+import android.content.Context
+import android.content.Intent
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
-import coil.load
-import com.example.handybook.R
-import com.example.handybook.databinding.FragmentEBookBinding
-import com.example.handybook.databinding.FragmentLoginBinding
+import androidx.fragment.app.Fragment
 import com.example.handybook.databinding.FragmentPdfViewBinding
-import com.example.handybook.model.Book
-import com.example.handybook.model.RetrievePDFFromURL
-import com.example.handybook.networking.APIClient
-import com.example.handybook.networking.APIService
-import com.github.barteksc.pdfviewer.PDFView
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,11 +24,11 @@ private const val ARG_PARAM2 = "param2"
  */
 class PdfViewFragment : Fragment() {
     // TODO: Rename and change types of parameters
-    private var id: Int = 0
+    private var url: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            id = it.getInt("id")
+            url = it.getString("url").toString()
         }
     }
 
@@ -48,24 +37,17 @@ class PdfViewFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        var pdf_url = ""
+        var pdf_url = Uri.parse(url)
         val binding = FragmentPdfViewBinding.inflate(inflater, container, false)
-        val api = APIClient.getInstance().create(APIService::class.java)
-        api.getBookById(id).enqueue(object : Callback<Book> {
-            override fun onResponse(call: Call<Book>, response: Response<Book>) {
-                if (response.isSuccessful && response.body() != null){
-                    var item = response.body()!!
-                    pdf_url = item.file
-                    Log.d("filee", pdf_url)
-                }
-            }
-            override fun onFailure(call: Call<Book>, t: Throwable) {
-                Log.d("TAG", "onFailure: $t")
-            }
-        })
-        Log.d("id", id.toString())
-        Log.d("file", pdf_url)
-        RetrievePDFFromURL(binding.pdfView).execute("http://handybook.uz/frontend/web/file/701697625957.pdf")
+        binding.pdfView.fromUri(pdf_url)
+        val intent = Intent(Intent.ACTION_VIEW, pdf_url)
+        val context: Context = binding.pdfView.context
+        if (intent.resolveActivity(context.packageManager) != null) {
+            context.startActivity(intent)
+            Log.d("hey", "hey")
+        } else {
+            Log.w("TAG", "No activity found for URI: $pdf_url")
+        }
         return binding.root
     }
 
