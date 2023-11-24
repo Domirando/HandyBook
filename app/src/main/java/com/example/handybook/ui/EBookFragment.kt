@@ -116,23 +116,18 @@ class EBookFragment() : Fragment() {
     }
 //    }
     private fun openFile(uri: Uri) {
-        val intent = Intent(Intent.ACTION_VIEW)
-        intent.setDataAndType(uri, "application/pdf") // Adjust MIME type as per your file type
-        intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-        try {
-            var bundle = Bundle()
-            bundle.putString("url", uri.toString())
-            var pdf = PdfViewFragment()
-            pdf.arguments = bundle
-            Log.d("hey1", "hey")
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.frame_container, pdf)
-                .commit()
-//           requireContext().startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            Log.d("err", e.message.toString())
-        }
-        Log.d("down uri", uri.toString())
+        var bundle = Bundle()
+        bundle.putString("url", uri.toString())
+        var pdf = PdfViewFragment()
+        pdf.arguments = bundle
+        val trans = requireActivity().supportFragmentManager.beginTransaction()
+        trans.replace(R.id.main, pdf)
+        trans.addToBackStack(null)
+        trans.commit()
+//            Log.d("hey1", "hey")
+//            parentFragmentManager.beginTransaction()
+//                .replace(R.id.main, pdf)
+//                .commit()
     }
     private fun findFileByName(fileName: String): Uri? {
         val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
