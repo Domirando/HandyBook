@@ -38,9 +38,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-
         binding.allbooksrecyle.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
-
 
         adapter = BooksAdapter(listOf(), requireContext(), object : BooksAdapter.OnClickBook {
             override fun onClickRoman(book: Book) {

@@ -4,12 +4,26 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.example.handybook.MyViewModel
+import com.example.handybook.databinding.FragmentHomeBinding
 import com.example.handybook.databinding.FragmentPdfViewBinding
+
+import com.example.handybook.model.createFileFromInputStream
+import com.example.handybook.model.readFileFromStorage
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.io.BufferedInputStream
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStreamReader
+import java.net.URL
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -36,18 +50,15 @@ class PdfViewFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        var pdf_url = Uri.parse(url)
-        val binding = FragmentPdfViewBinding.inflate(inflater, container, false)
-        binding.pdfView.fromUri(pdf_url)
-        val intent = Intent(Intent.ACTION_VIEW, pdf_url)
-        val context: Context = binding.pdfView.context
-        if (intent.resolveActivity(context.packageManager) != null) {
-            context.startActivity(intent)
-            Log.d("hey", "hey")
-        } else {
-            Log.w("TAG", "No activity found for URI: $pdf_url")
-        }
+        var binding = FragmentPdfViewBinding.inflate(inflater, container, false)
+        val fileName = getFileName(url)
+        var file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName)
+        Log.d("file name", fileName.toString())
+        Log.d("file url", url)
+        Log.d("file itself", file.toString())
+//        binding.pdfView.fromFile(fileMaker(url)).defaultPage(1).load()
+        binding.pdfView.fromFile(file).load()
+
         return binding.root
     }
 
@@ -61,5 +72,18 @@ class PdfViewFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+    fun fileMaker(url:String): File {
+        return File(url)
+    }
+    fun getFileName(filePath: String): String {
+        val lastIndex = filePath.lastIndexOf('/')
+        return if (lastIndex != -1) {
+            // Extracting the substring after the last '/'
+            filePath.substring(lastIndex + 1)
+        } else {
+            // If no '/' found, return the whole string as the file name
+            filePath
+        }
     }
 }

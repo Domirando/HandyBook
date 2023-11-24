@@ -1,5 +1,6 @@
 package com.example.handybook
 
+import android.os.Environment
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

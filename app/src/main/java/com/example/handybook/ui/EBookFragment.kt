@@ -120,15 +120,15 @@ class EBookFragment() : Fragment() {
         intent.setDataAndType(uri, "application/pdf") // Adjust MIME type as per your file type
         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         try {
-//            var bundle = Bundle()
-//            bundle.putString("url", uri.toString())
-//            var pdf = PdfViewFragment()
-//            pdf.arguments = bundle
-//            Log.d("hey1", "hey")
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.frame_container, pdf)
-//                .commit()
-//            startActivity(intent)
+            var bundle = Bundle()
+            bundle.putString("url", uri.toString())
+            var pdf = PdfViewFragment()
+            pdf.arguments = bundle
+            Log.d("hey1", "hey")
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.frame_container, pdf)
+                .commit()
+//           requireContext().startActivity(intent)
         } catch (e: ActivityNotFoundException) {
             Log.d("err", e.message.toString())
         }
