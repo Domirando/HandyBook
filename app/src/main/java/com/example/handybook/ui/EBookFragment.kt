@@ -124,10 +124,6 @@ class EBookFragment() : Fragment() {
         trans.replace(R.id.main, pdf)
         trans.addToBackStack(null)
         trans.commit()
-//            Log.d("hey1", "hey")
-//            parentFragmentManager.beginTransaction()
-//                .replace(R.id.main, pdf)
-//                .commit()
     }
     private fun findFileByName(fileName: String): Uri? {
         val directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)

@@ -53,10 +53,6 @@ class PdfViewFragment : Fragment() {
         var binding = FragmentPdfViewBinding.inflate(inflater, container, false)
         val fileName = getFileName(url)
         var file = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), fileName)
-        Log.d("file name", fileName.toString())
-        Log.d("file url", url)
-        Log.d("file itself", file.toString())
-//        binding.pdfView.fromFile(fileMaker(url)).defaultPage(1).load()
         binding.pdfView.fromFile(file).load()
 
         return binding.root
